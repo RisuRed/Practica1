@@ -4,7 +4,7 @@ const app = express()
 const { faker } = require('@faker-js/faker');
 
 //Parámetros para la conexión con la base de datos
-const sequelize = new Sequelize('abarrotes', 'root','Lilufifi1!',{
+const sequelize = new Sequelize('abarrotes', 'root','',{
     host: 'localhost',
     port: '3310',
     dialect: 'mysql'
