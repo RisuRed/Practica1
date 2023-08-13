@@ -1,0 +1,13 @@
+{
+    "name": "medic/api-rest",
+    "autoload": {
+        "psr-4": {
+            "lib\\": "./lib",
+            "Controllers\\" : "./Controllers"
+        }
+    },
+    "require": {
+        "firebase/php-jwt": "^6.8",
+        "vlucas/phpdotenv": "^5.5"
+    }
+}

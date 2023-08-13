@@ -1,0 +1,9 @@
+# Ignore composer's vendor directory
+/vendor/
+
+# Ignore the .env file (contains sensitive information)
+.env
+
+# Ignore Composer's generated autoload files
+/vendor/autoload.php
+/vendor/composer.lock
