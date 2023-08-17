@@ -3,7 +3,9 @@
     "autoload": {
         "psr-4": {
             "lib\\": "./lib",
-            "Controllers\\" : "./Controllers"
+            "Controllers\\" : "./Controllers",
+            "Models\\": "./Models",
+            "Helpers\\": "./Helpers"
         }
     },
     "require": {

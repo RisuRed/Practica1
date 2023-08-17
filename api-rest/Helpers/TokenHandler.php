@@ -1,7 +1,7 @@
 <?php
-
-require_once __DIR__ . '/../vendor/autoload.php';  // Cargar la biblioteca JWT
-
+namespace Helpers;
+require_once __DIR__ . '/../vendor/autoload.php';
+use Models\UserModel;
 use Firebase\JWT\JWT;
 
 class TokenHandler {
@@ -15,17 +15,23 @@ class TokenHandler {
     {
         $this->iat = time();
         $this->expire = $this->iat + (3600 * 8 );
-        $this->secret_key = $_ENV['SECRET_PRIVATE_KEY'];
+        $envVars = parse_ini_file("../.ENV");
+        $this->secret_key = $envVars['SECRET_PRIVATE_KEY'];
     }
 
-    public function Authenticate($username, $password) {
+    public function Authenticate($correo, $contrasena) {
+      // Utiliza el modelo UserModel para verificar las credenciales
+      $userModel = new UserModel();
       // Verificar las credenciales (cambiar esto por una consulta a la base de datos)
-      if ($username === 'usuario' && $password === 'contrasena') {
+      $isValidCredentials = $userModel->verifyCredentials($correo, $contrasena);
+      
+      if ($isValidCredentials) {
           $playload = [
-            'username' => $username
+            'correo' => $correo
           ];
-          return $this->tokenEncode($playload);
-          
+          $token=$this->tokenEncode($playload);
+          return $token;
+                    
       } else {
           http_response_code(401);
           return ['error' => 'Credenciales invalidas'];
@@ -43,13 +49,13 @@ class TokenHandler {
     }
 
 
-    public function tokenDecode($jwt_token){
-      try {
-        $decode = JWT::decode($jwt_token, $this->secret_key, array('HS256'));
-      }catch(Exception $e){
-        return $e->getMessage();
-      }
+    // public function tokenDecode($jwt_token){
+    //   try {
+    //     //$decode = JWT::decode($jwt_token, $this->secret_key, array('HS256'));
+    //   }catch(Exception $e){
+    //     return $e->getMessage();
+    //   }
         
-    }
+    // }
     
 }

@@ -1,7 +1,7 @@
 <?php
 
 namespace lib;
-require_once __DIR__ . '/../Controllers/login.php';
+//require_once __DIR__ . '/../Controllers/userController.php';
 
 class Route
 {
@@ -9,33 +9,28 @@ class Route
 
     //los metodos guardan las rutas en el arreglo routes
     public static function get($uri, $callback)
-    {
+    {   
         self::$routes['GET'][$uri] = $callback;
-        $callback();
+  
     }
 
     public static function post($uri, $callback)
     {
         self::$routes['POST'][$uri] = $callback;
-       /* $callbackParts = explode('@', $callback); // Divide la cadena en nombre de clase y nombre de método
-        $class = $callbackParts[0];
-        $method = $callbackParts[1];
-        call_user_func([$class, $method]);*/
-        $class = $callback[0];
-        $method = $callback[1];
-        $class::$method();
     }
 
     public static function put($uri, $callback)
     {
+        $uri = trim($uri, '/');
         self::$routes['PUT'][$uri] = $callback;
-        $callback();
+        // $callback();
     }
 
     public static function delete($uri, $callback)
     {
+        $uri = trim($uri, '/');
         self::$routes['DELETE'][$uri] = $callback;
-        $callback();
+        // $callback();
     }
 
     /**
@@ -54,8 +49,9 @@ class Route
         foreach (self::$routes[$method] as $route => $callback) {
             // Aqui tengo un problema ya que como tengo que acceder a la carpeta public para que se ejecute el index, ahora mis rutas no coinciden. Pero lo que voy a hacer es concatenar a la ruta public al inicio, asi no tendre problemas.
             // Variable especial para concatenar la ruta public al inicio
-            $especial = 'public/' . $route;
+            $especial = 'public' . $route;
             $especial = trim($especial, '/');
+            //echo $uri . " " . $especial . "</br>";
             // se usa una exprecion regular que la routa mas parametros coincida con cualquier uri que tenga parametros o si no tiene parametro que tambien funcione
             if (strpos($especial, ':') !== false) {
                 // Se remplaza el parametro que este delante de : por una exprecion regular
@@ -70,10 +66,12 @@ class Route
                 // Verificamos si lo que estamos recibiendo en el callback es una funcion
                 if (is_callable($callback)) {
                     // Se recibe la respuesta de la funcion
-                    $response = $callback(...$params);
+                    //$response = $callback(...$params);//da problemas
                 }
                 // Verificamos si lo que estamos recibiendo en el callback es un array
+
                 if (is_array($callback)) {
+                 
                     // Creamos una instancia de la clase Controller que se esta mandando 
                     // Recordemos que en el arreglo que se manda la primera posicion es una clase y la segunda una funcion de dicha clase
                     $controller = new $callback[0]();
