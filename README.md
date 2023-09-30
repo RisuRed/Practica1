@@ -68,7 +68,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ### Instalar dependencias
 Se tiene que ejecutar el siguiente comando en la raiz del proyecto
 
-``` composer install
+``` composer install ```
 
 ### Variables de entorno 
 Configuras tu archivo con tus variables de entorno
@@ -76,19 +76,19 @@ Configuras tu archivo con tus variables de entorno
 ### Generar una API_KEY
 Se tiene que ejecutar el siguiente comando en la raiz del proyecto
 
-``` php artisan key:generate
+``` php artisan key:generate ```
 
 ### Ejecutar migraciones
 Una vez que ya se configuro la base de datos que se va a usar, es necesario ejecutar la migraciones con el siguiente comando
 
- php artisan migrate
+ ``` php artisan migrate ```
 
 ###Crea los roles
 Se crean 2 roles el de admin y el de usuario final
-``` php artisan permission:create-role admin
-``` php artisan permission:create-role user-final
+``` php artisan permission:create-role admin ```
+``` php artisan permission:create-role user-final ```
 
 ### Iniciar el proyecto
 Una vez terminado los pasos anteriores, vamos a ejectuar el siguiente comando para iniciar el servidor
 
-``` php artisan serve
+``` php artisan serve ```
